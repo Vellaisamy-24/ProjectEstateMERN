@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { signIn } from "../store/Features/userSlice";
-
+import OAuth from "../components/OAuth";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -95,6 +95,10 @@ const SignUp = () => {
             </button>
           </div>
         </form>
+        <hr className="my-2" />
+        <div className="flex mx-auto items-center hover:opacity-85 hover:scale-100  bg-green-400 rounded-lg p-3 text-white font-medium text-xl  justify-center">
+          <OAuth />
+        </div>
       </section>
     </div>
   );

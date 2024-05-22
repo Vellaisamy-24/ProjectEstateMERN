@@ -76,3 +76,41 @@ exports.signIn = async (req, res) => {
     });
   }
 };
+
+exports.googleAuth = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const { password: pass, ...rest } = user._doc;
+      return res.cookie("access_token", token, { httpOnly: true }).json({
+        success: true,
+        message: "Goolge Login Success",
+        user: rest,
+        token: token,
+      });
+    } else {
+      const generatePassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashedPassword = bcryptjs.hashSync(generatePassword, 10);
+      const newUser = await User.create({
+        email: req.body.email,
+        userName: req.body.userName,
+        profile: req.body.profile,
+        password: hashedPassword,
+      });
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const { password: pass, ...rest } = newUser._doc;
+      return res.cookie("access_token", token).json({
+        success: true,
+        message: "google login for new User",
+        user: rest,
+        token: token,
+      });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
