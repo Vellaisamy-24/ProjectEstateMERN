@@ -78,6 +78,7 @@ exports.signIn = async (req, res) => {
 };
 
 exports.googleAuth = async (req, res) => {
+  console.log(req.body);
   try {
     const { email } = req.body;
     const user = await User.findOne({ email });
@@ -110,6 +111,60 @@ exports.googleAuth = async (req, res) => {
         token: token,
       });
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+exports.updateUser = async (req, res) => {
+  console.log("userid for update user", req.params.id);
+  console.log("data for update user", req.body);
+
+  try {
+    const _id = req.params.id;
+
+    const userExists = await User.findById(_id); //findOne({_id:req.params.id})
+    if (!userExists) {
+      return res.json({
+        success: false,
+        message: "User Not exists",
+      });
+    }
+    const updateUser = await User.findByIdAndUpdate(req.params.id, {
+      $set: {
+        userName: req.body.userName,
+        profile: req.body.profile,
+        email: req.body.email,
+        city: req.body.city,
+        postalCode: req.body.postalCode,
+        address: req.body.address,
+        phone: req.body.phone,
+        country: req.body.country,
+        state: req.body.state,
+      },
+    });
+    return res.json({
+      success: true,
+      message: "user Update success",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+exports.getUserById = async (req, res) => {
+  console.log("userInfo with id", req.params.id);
+  try {
+    const userExists = await User.findOne({ _id: req.params.id });
+    if (!userExists) {
+      return res.json({
+        success: false,
+        message: "User not exists",
+      });
+    }
+    return res.json({
+      success: true,
+      user: userExists,
+      message: "User info get success",
+    });
   } catch (error) {
     console.log(error);
   }

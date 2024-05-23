@@ -12,6 +12,27 @@ const schema = new mongoose.Schema({
   password: {
     type: String,
   },
+  profile: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  postalCode: {
+    type: Number,
+  },
+  phone: {
+    type: Number,
+  },
+  city: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
 });
 const User = mongoose.model("user", schema);
 module.exports = User;

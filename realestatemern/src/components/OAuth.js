@@ -2,7 +2,10 @@ import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import React from "react";
 import { app } from "../Firebase";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { signIn } from "../store/Features/userSlice";
 const OAuth = () => {
+  const dispatch = useDispatch();
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
@@ -21,8 +24,9 @@ const OAuth = () => {
         }
       );
       console.log(response.data);
-      console.log(response.data?.message);
-      console.log(response.data?.user);
+      // console.log(response.data?.message);
+      // console.log(response.data?.user);
+      dispatch(signIn({email:response.data.user.email,_id:response.data.user._id}))
     } catch (error) {
       console.log(error);
     }
