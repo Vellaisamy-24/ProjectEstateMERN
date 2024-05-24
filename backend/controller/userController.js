@@ -169,3 +169,26 @@ exports.getUserById = async (req, res) => {
     console.log(error);
   }
 };
+exports.deleteUserAccount = async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const userExists = await User.findById(req.params.id);
+    if (!userExists) {
+      return res.json({
+        success: false,
+        message: "User id not exitst",
+      });
+    }
+    const deleteUser = await User.findByIdAndDelete(req.params.id);
+    return res.json({
+      success: true,
+      message: "User Account Deleted",
+      deleteUser,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

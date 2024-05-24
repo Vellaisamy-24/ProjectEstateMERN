@@ -12,7 +12,13 @@ const userSlice = createSlice({
       state.currentUser = { email, _id };
       console.log(state.currentUser);
     },
+    signOut(state, action) {
+      state.currentUser = null;
+    },
+    deleteAccount(state, action) {
+      state.currentUser = null;
+    },
   },
 });
-export const { signIn } = userSlice.actions;
+export const { signIn, signOut, deleteAccount } = userSlice.actions;
 export default userSlice.reducer;

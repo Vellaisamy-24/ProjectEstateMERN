@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import SignOut from "./Sign-out";
+import DeleteAccount from "./DeleteAccount";
 
 const Profile = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -60,7 +62,7 @@ const Profile = () => {
     }
   };
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       {/* {user._id}{user.email} */}
       <form
         onSubmit={(e) => handleProfileUpdate(e)}
@@ -158,6 +160,14 @@ const Profile = () => {
           </button>
         </div>
       </form>
+      <div className="flex justify-between gap-8 p-10 ">
+        <span className="bg-green-400 hover:opacity-70 text-white p-3 rounded-lg font-medium">
+          <SignOut />
+        </span>
+        <span className="bg-red-400 hover:opacity-70 text-white p-3 rounded-lg font-medium">
+          <DeleteAccount />
+        </span>
+      </div>
     </div>
   );
 };

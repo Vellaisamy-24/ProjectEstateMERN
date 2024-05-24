@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import SignIn from "./pages/SignIn";
 import { Toaster } from "react-hot-toast";
 import Profile from "./pages/Profile";
+import PrivateRoute from "./components/PrivateRoute";
 const App = () => {
   return (
     <div className="">
@@ -14,7 +15,9 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
       </Router>
     </div>
