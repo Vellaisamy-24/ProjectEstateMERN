@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { signIn } from "../store/Features/userSlice";
 import OAuth from "../components/OAuth";
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,6 +46,9 @@ const SignUp = () => {
       );
       if (response.status === 200) {
         toast.success("SignUp success");
+        setTimeout(() => {
+          navigate("/");
+        }, 500);
       }
       if (response.status === 404) {
         toast.error(response.data?.message || "Error");
