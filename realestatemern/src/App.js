@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn";
 import { Toaster } from "react-hot-toast";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
+import CreateCategoryListing from "./CategoryListing/CreateCategoryListing";
 const App = () => {
   return (
     <div className="">
@@ -17,6 +18,10 @@ const App = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
+            <Route
+              path="/createCategoryListing"
+              element={<CreateCategoryListing />}
+            />
           </Route>
         </Routes>
       </Router>
