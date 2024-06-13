@@ -1,9 +1,11 @@
 const express = require("express");
 const {
-  getCategoryListingById,
+  getSingleCategoryListingById,
   createCategoryListing,
+  getAllCategoryListing,
 } = require("../controller/categoryListing");
 const router = express.Router();
 router.route("/createCategoryListing").post(createCategoryListing);
-router.route("/getCategoryListingById/:id").get(getCategoryListingById);
+router.route("/getSingleCategoryListingById/:id").get(getSingleCategoryListingById);
+router.route("/getAllCategoryListing").get(getAllCategoryListing);
 module.exports = router;

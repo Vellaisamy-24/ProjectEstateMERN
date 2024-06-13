@@ -15,7 +15,7 @@ exports.createCategoryListing = async (req, res) => {
     });
   }
 };
-exports.getCategoryListingById = async (req, res) => {
+exports.getSingleCategoryListingById = async (req, res) => {
   try {
     const id = req.params.id;
     const categoryListingById = await CategoryListing.findById(id);
@@ -28,6 +28,21 @@ exports.getCategoryListingById = async (req, res) => {
     return res.json({
       success: true,
       categoryListingById,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+exports.getAllCategoryListing = async (req, res) => {
+  try {
+    const allCategoryListing = await CategoryListing.find();
+    return res.json({
+      success: true,
+      message: "All catgory Listing fetched",
+      allCategoryListing,
     });
   } catch (error) {
     return res.json({
