@@ -15,7 +15,9 @@ mongoose
     console.log(error);
   });
 const userRoute = require("./routes/userRoute");
+const categoryRoute = require("./routes/categoryListingRoute");
 app.use("/api/user", userRoute);
+app.use("/api/data", categoryRoute);
 app.listen(5000, (req, res) => {
   console.log("app is listening to 5000");
 });
