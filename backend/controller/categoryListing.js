@@ -15,3 +15,24 @@ exports.createCategoryListing = async (req, res) => {
     });
   }
 };
+exports.getCategoryListingById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const categoryListingById = await CategoryListing.findById(id);
+    if (!categoryListingById) {
+      return res.json({
+        success: false,
+        message: "lisitng by id not found",
+      });
+    }
+    return res.json({
+      success: true,
+      categoryListingById,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};

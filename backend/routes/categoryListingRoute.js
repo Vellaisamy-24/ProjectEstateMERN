@@ -1,5 +1,9 @@
 const express = require("express");
-const { createCategoryListing } = require("../controller/categoryListing");
+const {
+  getCategoryListingById,
+  createCategoryListing,
+} = require("../controller/categoryListing");
 const router = express.Router();
 router.route("/createCategoryListing").post(createCategoryListing);
+router.route("/getCategoryListingById/:id").get(getCategoryListingById);
 module.exports = router;
