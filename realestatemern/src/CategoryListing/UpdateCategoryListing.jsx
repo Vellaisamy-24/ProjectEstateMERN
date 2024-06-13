@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { storage } from "../Firebase";
 import { v4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -21,9 +21,13 @@ const CreateCategoryListing = () => {
   const [bathRooms, setBathRooms] = useState(0);
   const [regularPrice, setRegularPrice] = useState(0);
   const [discountPrice, setDiscountPrice] = useState(0);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const params = useParams();
-  const user = useSelector((state) => state.user.currentUser);
+  // const user = useSelector((state) => state.user.currentUser);
+  const id = params.id;
+  useEffect(() => {
+    fetchCategoryListingById();
+  }, [id]);
   const handleImageUpload = async (e) => {
     e.preventDefault();
     try {
@@ -40,39 +44,60 @@ const CreateCategoryListing = () => {
     setImage(e.target.files[0]);
   };
   const deleteImage = (id) => {
+    console.log(id)
     const newImage = images.filter((url) => url !== id);
     setImage(newImage);
   };
-  const createCategoryListing = async (e) => {
+
+  const fetchCategoryListingById = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/data/getSingleCategoryListingById/${id}`
+      );
+      console.log(response);
+      console.log(response.data?.message);
+      setName(response.data?.categoryListingById?.name);
+      setDescription(response.data?.categoryListingById?.description);
+      setAddress(response.data?.categoryListingById?.address);
+      setRegularPrice(response.data?.categoryListingById?.regularPrice);
+      setDiscountPrice(response.data?.categoryListingById?.discountPrice);
+      setBedRooms(response.data?.categoryListingById?.bedRooms);
+      setBathRooms(response.data?.categoryListingById?.bathRooms);
+      setFurnished(response.data?.categoryListingById?.furnished);
+      setOffer(response.data?.categoryListingById?.offer);
+      setParking(response.data?.categoryListingById?.parking);
+      setSell(response.data?.categoryListingById?.sell);
+      setImages(response.data?.categoryListingById?.images);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const updateCategoryListingById = async (e) => {
     try {
       e.preventDefault();
-      const response = await axios.post(
-        "http://localhost:5000/api/data/createCategoryListing",
+      const response = await axios.put(
+        `http://localhost:5000/api/data/updateCategoryListingById/${id}`,
         {
-          furnished,
+          name,
+          description,
           offer,
           rent,
+          sell,
           parking,
-          images,
+          furnished,
           regularPrice,
           discountPrice,
-          name,
-          sell,
           address,
-          description,
           bedRooms,
-
           bathRooms,
-          userRef: {
-            id: user._id,
-            email: user.email,
-          },
+          images,
         }
       );
       console.log(response);
-      console.log(response.data.message);
+      console.log(response.data?.message);
+      fetchCategoryListingById();
       setTimeout(() => {
-        toast.success("Created");
+        toast.success("Updated");
       }, 500);
     } catch (error) {
       console.log(error);
@@ -83,7 +108,7 @@ const CreateCategoryListing = () => {
       {/* //  <h1>user:{user.email}{user._id}</h1> */}
       <h1>UpdateCategoryListing:{params.id}</h1>
       <form
-        onSubmit={(e) => createCategoryListing(e)}
+        onSubmit={(e) => updateCategoryListingById(e)}
         className="p-10 flex flex-col gap-4"
       >
         <div className="flex py-3 items-center gap-4">
@@ -217,7 +242,7 @@ const CreateCategoryListing = () => {
             type="submit"
             className="p-3 border text-lg rounded-lg shadow-sm hover:bg-green-400 hover:text-white hover:scale-100 hover:translate-x-2 font-semibold"
           >
-            CreateCategoryLisiting
+            UpdateCategoryListing
           </button>
         </section>
       </form>
