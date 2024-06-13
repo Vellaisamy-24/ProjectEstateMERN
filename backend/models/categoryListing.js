@@ -46,6 +46,9 @@ const schema = new mongoose.Schema({
   images: {
     type: Array,
   },
+},
+{
+  timestamps:true
 });
 const CategoryListing=mongoose.model('categoryListing',schema)
 module.exports=CategoryListing

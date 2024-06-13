@@ -77,7 +77,7 @@ exports.updateCategoryListingById = async (req, res) => {
   try {
     const id = req.params.id;
     console.log(req.params.id + "id for update");
-    console.log(req.body)
+    console.log(req.body);
     const updateCategoryListing = await CategoryListing.findByIdAndUpdate(
       id,
       {
@@ -105,6 +105,46 @@ exports.updateCategoryListingById = async (req, res) => {
       success: true,
       message: "update categoryListing by id success",
       updateCategoryListing,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+exports.getCategoryListing = async (req, res) => {
+  try {
+    let limit = parseInt(req.query.limit) || 8;
+    let startIndex = parseInt(req.query.startIndex) || 0;
+    let offer = req.query.offer;
+    if (offer === undefined || offer === "false") {
+      offer = { $in: [false, true] };
+    }
+    let furnished = req.body.furnished;
+    if (furnished === undefined || furnished === "false") {
+      furnished = { $in: [false, true] };
+    }
+    let parking = req.query.parking;
+    if (parking === undefined || parking === "false") {
+      parking = { $in: [false, true] };
+    }
+    const searchTerm = req.query.searchTerm || "";
+    const sort = req.query.sort || "createdAt";
+    const order = req.query.order || "desc";
+    const categoryListing = await CategoryListing.find({
+      name: { $regex: searchTerm, $options: "i" },
+      offer,
+      parking,
+      furnished,
+    })
+      .sort({ [sort]: order })
+      .limit(limit)
+      .skip(startIndex);
+    return res.json({
+      success: true,
+      message: "Get Category Lisiting",
+      categoryListing,
     });
   } catch (error) {
     return res.json({
