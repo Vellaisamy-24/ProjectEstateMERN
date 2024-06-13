@@ -20,6 +20,17 @@ const UserCategoryListing = () => {
       console.log(error);
     }
   };
+  const deleteCategoryListing = async (id) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5000/api/data/deleteCategoryListingById/${id}`
+      );
+      fetchUserCategoryListing();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div>
       {/* UserCategoryListing:{user.email}:{user._id} */}
@@ -28,12 +39,21 @@ const UserCategoryListing = () => {
         {userCategoryListing &&
           userCategoryListing.map((data, index) => (
             <div key={index} className="py-5 px-2 border">
-              <Link
-                to={`/updateCategoryListing/${data._id}`}
-                className=" flex right-0 fixed px-10"
-              >
-                Update
-              </Link>
+              <div className="flex flex-col items-center gap-4 justify-center relative">
+                <Link
+                  to={`/updateCategoryListing/${data._id}`}
+                  className=" flex left-0 absolute px-40"
+                >
+                  Update
+                </Link>
+                <button
+                  onClick={(e) => deleteCategoryListing(data._id)}
+                  className="flex right-0 absolute px-20"
+                >
+                  Delete
+                </button>
+              </div>
+
               <div>
                 <div className="flex gap-4  flex-wrap">
                   {data.images &&
