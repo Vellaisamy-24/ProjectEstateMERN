@@ -51,22 +51,61 @@ exports.getAllCategoryListing = async (req, res) => {
     });
   }
 };
-exports.deleteCategoryListingById = async(req,res) => {
+exports.deleteCategoryListingById = async (req, res) => {
   try {
-    const id=req.params.id
-    const deleteCategoryListing=await CategoryListing.findByIdAndDelete(id)
-    if(!deleteCategoryListing)
-        {
-            return res.json({
-                success:false,
-                message:"id not found for delete"
-            })
-        }
-        return res.json({
-            success:true,
-            message:"deleted category lisitng by id success",
-            deleteCategoryListing
-        })
+    const id = req.params.id;
+    const deleteCategoryListing = await CategoryListing.findByIdAndDelete(id);
+    if (!deleteCategoryListing) {
+      return res.json({
+        success: false,
+        message: "id not found for delete",
+      });
+    }
+    return res.json({
+      success: true,
+      message: "deleted category lisitng by id success",
+      deleteCategoryListing,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+exports.updateCategoryListingById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    console.log(req.params.id + "id for update");
+    console.log(req.body)
+    const updateCategoryListing = await CategoryListing.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          name: req.body.name,
+          description: req.body.name,
+          address: req.body.address,
+          regularPrice: req.body.regularPrice,
+          discountPrice: req.body.discountPrice,
+          bathRooms: req.body.bathRooms,
+          bedRooms: req.body.bedRooms,
+          furnished: req.body.furnished,
+          parking: req.body.parking,
+          offer: req.body.offer,
+          rent: req.body.rent,
+          sell: req.body.sell,
+          images: req.body.images,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    return res.json({
+      success: true,
+      message: "update categoryListing by id success",
+      updateCategoryListing,
+    });
   } catch (error) {
     return res.json({
       success: false,
