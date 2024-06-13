@@ -7,6 +7,8 @@ import { Toaster } from "react-hot-toast";
 import Profile from "./pages/Profile";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateCategoryListing from "./CategoryListing/CreateCategoryListing";
+import UpdateCategoryListing from "./CategoryListing/UpdateCategoryListing";
+import UserCategoryListing from "./CategoryListing/UserCategoryListing";
 const App = () => {
   return (
     <div className="">
@@ -21,6 +23,14 @@ const App = () => {
             <Route
               path="/createCategoryListing"
               element={<CreateCategoryListing />}
+            />
+            <Route
+              path="/updateCategoryListing/:id"
+              element={<UpdateCategoryListing />}
+            />
+            <Route
+              path="/userCategoryListing"
+              element={<UserCategoryListing />}
             />
           </Route>
         </Routes>

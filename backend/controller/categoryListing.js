@@ -154,3 +154,28 @@ exports.getCategoryListing = async (req, res) => {
     });
   }
 };
+exports.getUserCategoryListing = async (req, res) => {
+  try {
+    console.log(req.params.id)
+    const id = req.params.id.trim();
+    const userCategoryListing = await CategoryListing.find({
+      "userRef.id": req.params.id,
+    });
+    if (!userCategoryListing) {
+      return res.json({
+        success: false,
+        message: "user lisiting not found",
+      });
+    }
+    return res.json({
+      success: true,
+      message: "User listing fetched success",
+      userCategoryListing,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
