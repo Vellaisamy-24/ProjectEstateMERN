@@ -51,3 +51,26 @@ exports.getAllCategoryListing = async (req, res) => {
     });
   }
 };
+exports.deleteCategoryListingById = async(req,res) => {
+  try {
+    const id=req.params.id
+    const deleteCategoryListing=await CategoryListing.findByIdAndDelete(id)
+    if(!deleteCategoryListing)
+        {
+            return res.json({
+                success:false,
+                message:"id not found for delete"
+            })
+        }
+        return res.json({
+            success:true,
+            message:"deleted category lisitng by id success",
+            deleteCategoryListing
+        })
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
