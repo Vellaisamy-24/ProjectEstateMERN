@@ -1,11 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../pages/Header";
+import HomeCategoryListing from "../pages/HomeCategoryListing";
 
 const Home = () => {
   return (
     <div>
-      <Header />
+      <div>
+        <Header />
+      </div>
+      <div className="max-w-screen ">
+        <HomeCategoryListing />
+      </div>
     </div>
   );
 };

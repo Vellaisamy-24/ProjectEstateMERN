@@ -116,7 +116,7 @@ exports.updateCategoryListingById = async (req, res) => {
 };
 exports.getCategoryListing = async (req, res) => {
   try {
-    let limit = parseInt(req.query.limit) || 8;
+    let limit = parseInt(req.query.limit) || 100;
     let startIndex = parseInt(req.query.startIndex) || 0;
     let offer = req.query.offer;
     if (offer === undefined || offer === "false") {
