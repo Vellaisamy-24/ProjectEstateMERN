@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SearchCategoryList from "./SearchCategoryList";
+import axios from "axios";
 const Header = () => {
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.currentUser);
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      urlParams.set("searchTerm", search);
+      const searchQuery = urlParams.toString();
+      // const response = await axios.get(
+      //   "http://localhost:5000/api/data/getCategoryListing/",
+      //   {
+      //     searchTerm: search,
+      //   }
+      // );
+      // console.log(response.data?.message);
+      // console.log(response.data?.categoryListing);
+      navigate(`/search?${searchQuery}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     // {user.email}{user._id}
     <div className="flex  border p-10 justify-between items-center">
@@ -13,7 +35,17 @@ const Header = () => {
         </h1>
       </div>
       <div>
-        <SearchCategoryList />
+        <form onSubmit={(e) => handleSearch(e)}>
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search..."
+            className="p-3 rounded-lg border-2 border-slate-400 shadow-lg"
+          />
+        </form>
+
+        {/* <SearchCategoryList /> */}
       </div>
       <div className="flex gap-8 px-10  text-sm flex-wrap">
         <Link to={"/"}>Home</Link>

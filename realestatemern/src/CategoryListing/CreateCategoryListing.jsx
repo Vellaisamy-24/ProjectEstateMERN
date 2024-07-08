@@ -3,7 +3,7 @@ import { storage } from "../Firebase";
 import { v4 } from "uuid";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import axios from "axios";
-import toast from "react-hot-toast"
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 const CreateCategoryListing = () => {
   const [name, setName] = useState("");
@@ -68,10 +68,9 @@ const CreateCategoryListing = () => {
       );
       console.log(response);
       console.log(response.data.message);
-      setTimeout(()=>
-    {
-        toast.success("Created")
-    },500)
+      setTimeout(() => {
+        toast.success("Created");
+      }, 500);
     } catch (error) {
       console.log(error);
     }
@@ -185,7 +184,7 @@ const CreateCategoryListing = () => {
             />
           </div>
           <div className="flex items-center gap-2">
-            <label>Offer</label>
+            <label>Rent</label>
             <input
               type="checkbox"
               checked={rent}
@@ -212,9 +211,8 @@ const CreateCategoryListing = () => {
         </section>
         <section>
           <button
-          type="submit"
+            type="submit"
             className="p-3 border text-lg rounded-lg shadow-sm hover:bg-green-400 hover:text-white hover:scale-100 hover:translate-x-2 font-semibold"
-
           >
             CreateCategoryLisiting
           </button>

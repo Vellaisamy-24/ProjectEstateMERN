@@ -13,7 +13,7 @@ const HomeCategoryListing = () => {
       const response = await axios.get(
         "http://localhost:5000/api/data/getCategoryListing?offer=true"
       );
-      console.log(response);
+      // console.log(response);
       setOfferCategoryListing(response.data?.categoryListing);
       fetchRentCategoryListing();
     } catch (error) {
@@ -25,7 +25,7 @@ const HomeCategoryListing = () => {
       const response = await axios.get(
         "http://localhost:5000/api/data/getCategoryListing?rent=true"
       );
-      console.log(response);
+      // console.log(response);
       setRentCategoryListing(response.data?.categoryListing);
       fetchSaleCategoryListing();
     } catch (error) {
@@ -37,7 +37,7 @@ const HomeCategoryListing = () => {
       const response = await axios.get(
         "http://localhost:5000/api/data/getCategoryListing?sale=true"
       );
-      console.log(response);
+      // console.log(response);
       setSellCategoryListing(response.data?.categoryListing);
     } catch (error) {
       console.log(error);
@@ -50,7 +50,52 @@ const HomeCategoryListing = () => {
         <div className=" flex overflow-x-auto max-w-screen  gap-8">
           {offerCategoryListing &&
             offerCategoryListing.map((data, index) => (
-              <div className="border flex flex-col gap-4 w-[500px] h-auto">
+              <div
+                key={index}
+                className="border flex flex-col gap-4 w-[500px] h-auto"
+              >
+                <div className="">
+                  {data.images && (
+                    <img
+                      src={data.images[0]}
+                      className="object-cover w-full h-full"
+                    />
+                  )}
+                </div>
+                <div>
+                  <h1 className="truncate">{data.name}</h1>
+                </div>
+              </div>
+            ))}
+        </div>
+        <div className=" flex overflow-x-auto max-w-screen  gap-8">
+          {sellCategoryListing &&
+            sellCategoryListing.map((data, index) => (
+              <div
+                key={index}
+                className="border flex flex-col gap-4 w-[500px] h-auto"
+              >
+                <div className="">
+                  {data.images && (
+                    <img
+                      src={data.images[0]}
+                      className="object-cover w-full h-full"
+                    />
+                  )}
+                </div>
+                <div>
+                  <h1 className="truncate">{data.name}</h1>
+                </div>
+              </div>
+            ))}
+        </div>
+        <div className=" flex overflow-x-auto max-w-screen  gap-8">
+          {rentCategoryListing &&
+            rentCategoryListing.map((data, index) => (
+              <div
+                key={index}
+                className="border flex flex-col gap-4 w-[500px] h-auto"
+              >
                 <div className="">
                   {data.images && (
                     <img

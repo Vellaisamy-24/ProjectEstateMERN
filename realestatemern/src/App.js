@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateCategoryListing from "./CategoryListing/CreateCategoryListing";
 import UpdateCategoryListing from "./CategoryListing/UpdateCategoryListing";
 import UserCategoryListing from "./CategoryListing/UserCategoryListing";
+import SearchCategoryList from "./pages/SearchCategoryList";
 const App = () => {
   return (
     <div className="">
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/search" element={<SearchCategoryList />}/>
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route
