@@ -9,7 +9,7 @@ const Home = () => {
       <div>
         <Header />
       </div>
-      <div className="max-w-screen ">
+      <div className=" py-40">
         <HomeCategoryListing />
       </div>
     </div>

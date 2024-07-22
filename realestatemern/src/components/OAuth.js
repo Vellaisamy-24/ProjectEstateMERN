@@ -4,6 +4,7 @@ import { app } from "../Firebase";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { signIn } from "../store/Features/userSlice";
+import { FaGoogle } from "react-icons/fa";
 const OAuth = () => {
   const dispatch = useDispatch();
   const handleGoogleLogin = async () => {
@@ -26,7 +27,9 @@ const OAuth = () => {
       console.log(response.data);
       // console.log(response.data?.message);
       // console.log(response.data?.user);
-      dispatch(signIn({email:response.data.user.email,_id:response.data.user._id}))
+      dispatch(
+        signIn({ email: response.data.user.email, _id: response.data.user._id })
+      );
     } catch (error) {
       console.log(error);
     }
@@ -34,7 +37,8 @@ const OAuth = () => {
 
   return (
     <div>
-      <button onClick={(e) => handleGoogleLogin(e)}>
+      <button className="flex items-center gap-2" onClick={(e) => handleGoogleLogin(e)}>
+        <FaGoogle />
         Continue With Google
       </button>
     </div>

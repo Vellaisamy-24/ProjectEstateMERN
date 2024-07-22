@@ -10,6 +10,8 @@ import CreateCategoryListing from "./CategoryListing/CreateCategoryListing";
 import UpdateCategoryListing from "./CategoryListing/UpdateCategoryListing";
 import UserCategoryListing from "./CategoryListing/UserCategoryListing";
 import SearchCategoryList from "./pages/SearchCategoryList";
+import Menu from "./pages/Menu";
+
 const App = () => {
   return (
     <div className="">
@@ -19,7 +21,8 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/search" element={<SearchCategoryList />}/>
+          <Route path="/search" element={<SearchCategoryList />} />
+          <Route path="/menu" element={<Menu />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route
