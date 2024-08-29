@@ -12,22 +12,6 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/user/sign-in",
-        {
-          email,
-          password,
-        }
-      );
-      console.log(response.data?.message);
-    } catch (error) {
-      toast.error(error.message);
-    }
-  };
-
   const handleSignIn = async (e) => {
     console.log("clicked");
     e.preventDefault();
@@ -46,8 +30,9 @@ const SignUp = () => {
         signIn({ email: response.data.user.email, _id: response.data.user._id })
       );
       if (response.status === 200) {
-        toast.success("SignUp success");
+        // toast.success("SignUp success");
         setTimeout(() => {
+          toast.success("signIn success");
           navigate("/");
         }, 500);
       }
@@ -81,7 +66,9 @@ const SignUp = () => {
             className="py-4 gap-4 text-xl flex flex-col items-center"
           >
             <div className="flex py-4 items-center gap-4">
-              <label className="px-2 text-orange-500 font-semibold">Email</label>
+              <label className="px-2 text-orange-500 font-semibold">
+                Email
+              </label>
               <input
                 required
                 type="email"

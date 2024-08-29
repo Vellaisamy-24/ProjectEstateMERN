@@ -7,6 +7,7 @@ const {
   updateCategoryListingById,
   getCategoryListing,
   getUserCategoryListing,
+  deleteAllListingData,
 } = require("../controller/categoryListing");
 const router = express.Router();
 router.route("/createCategoryListing").post(createCategoryListing);
@@ -21,3 +22,4 @@ module.exports = router;
 router.route("/updateCategoryListingById/:id").put(updateCategoryListingById);
 router.route("/getCategoryListing").get(getCategoryListing);
 router.route("/getUserCategoryListing/:id").get(getUserCategoryListing);
+router.route("/delteAllListingData").delete(deleteAllListingData);

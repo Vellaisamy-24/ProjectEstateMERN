@@ -11,6 +11,7 @@ import UpdateCategoryListing from "./CategoryListing/UpdateCategoryListing";
 import UserCategoryListing from "./CategoryListing/UserCategoryListing";
 import SearchCategoryList from "./pages/SearchCategoryList";
 import Menu from "./pages/Menu";
+import SingleListing from "./pages/SingleListing";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/search" element={<SearchCategoryList />} />
           <Route path="/menu" element={<Menu />} />
+          <Route path="listing/:id" element={< SingleListing/>} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route

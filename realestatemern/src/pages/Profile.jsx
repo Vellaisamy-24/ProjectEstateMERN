@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import SignOut from "./Sign-out";
 import DeleteAccount from "./DeleteAccount";
-
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../Firebase";
+import { v4 } from "uuid";
 const Profile = () => {
   const user = useSelector((state) => state.user.currentUser);
   useEffect(() => {
@@ -18,6 +20,9 @@ const Profile = () => {
   const [state, setState] = useState("");
   const [address, setAddress] = useState("");
   const [profile, setProfile] = useState("");
+  const [image, setImage] = useState("");
+  const [images, setImages] = useState("");
+  // const [profile, setProfile] = useState("");
   const handleProfile = async () => {
     try {
       const response = await axios.get(
@@ -61,114 +66,249 @@ const Profile = () => {
       console.log(error);
     }
   };
+  const imageUpload = async (e) => {
+    try {
+      e.preventDefault();
+      const imageRef = ref(storage, `images/${v4()}`);
+      await uploadBytes(imageRef, image);
+      const images = await getDownloadURL(imageRef);
+      console.log(images);
+      setImages(images);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      {/* {user._id}{user.email} */}
-      <form
-        onSubmit={(e) => handleProfileUpdate(e)}
-        className="border flex flex-col gap-4 p-5"
-      >
-        <h1 className="font-bold text-center text-2xl text-orange-400 ">
-          Profile
-        </h1>
-        <div className="flex items-center justify-center">
-          <label className="hover:cursor-pointer">
-            <input className="hidden" type="file" />
-            <img src={profile} className="w-[60px] rounded-full" />
-          </label>
+    <>
+      <div className="flex  md:hidden flex-col items-center justify-center min-h-screen">
+        {/* {user._id}{user.email} */}
+        <form
+          onSubmit={(e) => handleProfileUpdate(e)}
+          className="border flex flex-col gap-4 p-5"
+        >
+          <h1 className="font-bold text-center text-2xl text-orange-400 ">
+            Profile
+          </h1>
+          <div className="flex items-center justify-center">
+            <label className="hover:cursor-pointer">
+              <input className="hidden" type="file" />
+              <img src={profile} className="w-[60px] rounded-full" />
+            </label>
+          </div>
+          <div className="flex flex-col p-3 gap-4">
+            <div className="flex items-center gap-4">
+              <label>Email</label>
+              <input
+                value={email}
+                disabled={true}
+                className="p-3 border truncate rounded-lg"
+                type="email"
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <label>UserName</label>
+              <input
+                className="border rounded-lg text-slate-600 p-3"
+                type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <label>Phone</label>
+              <input
+                className="border p-3"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <label>Address</label>
+              <input
+                className="border p-3 truncate"
+                type="tel"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <label>PostalCode</label>
+              <input
+                className="border p-3"
+                type="text"
+                value={postalCode}
+                onChange={(e) => setPostalCode(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <label>City</label>
+              <input
+                className="border p-3"
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <label>State</label>
+              <input
+                className="border p-3"
+                type="text"
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <label>Country</label>
+              <input
+                className="border p-3"
+                type="text"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <button
+              type="submit"
+              className="text-white hover:opacity-50 bg-orange-400 p-3 border  rounded-lg"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+        <div className="flex justify-between gap-8 p-10 ">
+          <span className="bg-green-400 hover:opacity-70 text-white p-3 rounded-lg font-medium">
+            <SignOut />
+          </span>
+          <span className="bg-red-400 hover:opacity-70 text-white p-3 rounded-lg font-medium">
+            <DeleteAccount />
+          </span>
         </div>
-        <div className="flex flex-col p-3 gap-4">
-          <div className="flex items-center gap-4">
-            <label>Email</label>
-            <input
-              value={email}
-              disabled={true}
-              className="p-3 border truncate rounded-lg"
-              type="email"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <label>UserName</label>
-            <input
-              className="border rounded-lg text-slate-600 p-3"
-              type="text"
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <label>Phone</label>
-            <input
-              className="border p-3"
-              type="tel"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <label>Address</label>
-            <input
-              className="border p-3 truncate"
-              type="tel"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <label>PostalCode</label>
-            <input
-              className="border p-3"
-              type="text"
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <label>City</label>
-            <input
-              className="border p-3"
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <label>State</label>
-            <input
-              className="border p-3"
-              type="text"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <label>Country</label>
-            <input
-              className="border p-3"
-              type="text"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            />
-          </div>
-        </div>
-        <div className="flex items-center justify-center">
-          <button
-            type="submit"
-            className="text-white hover:opacity-50 bg-orange-400 p-3 border  rounded-lg"
-          >
-            Update
-          </button>
-        </div>
-      </form>
-      <div className="flex justify-between gap-8 p-10 ">
-        <span className="bg-green-400 hover:opacity-70 text-white p-3 rounded-lg font-medium">
-          <SignOut />
-        </span>
-        <span className="bg-red-400 hover:opacity-70 text-white p-3 rounded-lg font-medium">
-          <DeleteAccount />
-        </span>
       </div>
-    </div>
+      <div className="md:flex hidden flex-col  w-full px-20 py-10">
+        {/* {user._id}{user.email} */}
+        <form
+          onSubmit={(e) => handleProfileUpdate(e)}
+          className="border flex bg-white/50 flex-col gap-4 p-5 rounded-lg "
+        >
+          <h1 className="font-bold text-center text-2xl text-orange-400 ">
+            Profile
+          </h1>
+          <div className="flex items-center justify-center">
+            <label className="hover:cursor-pointer">
+              <input className="hidden" type="file" />
+              <img
+                src={profile ? profile : images}
+                // value={image}
+                onChange={(e) => setImage(e.target.files[0])}
+                className="w-24 rounded-full"
+              />
+              <button onClick={(e) => imageUpload(e)}>up</button>
+            </label>
+          </div>
+          <div className="flex flex-col p-3 gap-4">
+            <div className="flex items-center gap-4">
+              <label>Email</label>
+              <input
+                value={email}
+                disabled={true}
+                className="p-3 border truncate rounded-lg"
+                type="email"
+              />
+            </div>
+            <div className="flex items-center gap-4">
+              <label>UserName</label>
+              <input
+                className="border rounded-lg text-slate-600 p-3"
+                type="text"
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+              />
+            </div>
+            <hr />
+            <div className="flex items-center  w-4/5 justify-between">
+              <div className="flex flex-col  gap-2">
+                <label>Address</label>
+                <textarea
+                  className="border p-3 rounded-lg w-full"
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-2 ">
+                <label>Phone</label>
+                <input
+                  className="border rounded-lg p-3"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex w-4/5 justify-between">
+              <div className="flex flex-col gap-2">
+                <label>City</label>
+                <input
+                  className="border rounded-lg p-3"
+                  type="text"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label>State</label>
+                <input
+                  className="border rounded-lg p-3"
+                  type="text"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between w-4/5">
+              <div className="flex flex-col gap-2">
+                <label>PostalCode</label>
+                <input
+                  className="border rounded-lg p-3"
+                  type="text"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <label>Country</label>
+                <input
+                  className="border rounded-lg p-3"
+                  type="text"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center justify-center">
+            <button
+              type="submit"
+              className="text-white hover:opacity-50 bg-orange-400 p-3 border  rounded-lg"
+            >
+              Update
+            </button>
+          </div>
+        </form>
+        <div className="flex justify-between gap-8 p-10 ">
+          <span className="bg-green-400 hover:opacity-70 text-white p-3 rounded-lg font-medium">
+            <SignOut />
+          </span>
+          <span className="bg-red-400 hover:opacity-70 text-white p-3 rounded-lg font-medium">
+            <DeleteAccount />
+          </span>
+        </div>
+      </div>
+    </>
   );
 };
 

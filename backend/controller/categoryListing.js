@@ -28,6 +28,7 @@ exports.getSingleCategoryListingById = async (req, res) => {
     }
     return res.json({
       success: true,
+      message: "Listing by id success",
       categoryListingById,
     });
   } catch (error) {
@@ -156,7 +157,7 @@ exports.getCategoryListing = async (req, res) => {
 };
 exports.getUserCategoryListing = async (req, res) => {
   try {
-    console.log(req.params.id)
+    console.log(req.params.id);
     const id = req.params.id.trim();
     const userCategoryListing = await CategoryListing.find({
       "userRef.id": req.params.id,
@@ -171,6 +172,22 @@ exports.getUserCategoryListing = async (req, res) => {
       success: true,
       message: "User listing fetched success",
       userCategoryListing,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.deleteAllListingData = async (req,res) => {
+  try {
+    const deleteData = await CategoryListing.deleteMany();
+    return res.json({
+      success: true,
+      message: "All listing deleted",
+      deleteData,
     });
   } catch (error) {
     return res.json({

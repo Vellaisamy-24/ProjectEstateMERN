@@ -7,7 +7,7 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       //  console.log({ userName, email, password });
@@ -22,8 +22,9 @@ const SignUp = () => {
       console.log(response.data.message);
       console.log(response.data?.user);
       if (response.status === 200) {
-        toast.success("SignUp success");
+        // toast.success("SignUp success");
         setTimeout(() => {
+          toast.success("singup success")
           navigate("/sign-in");
         }, 500);
       }
@@ -51,10 +52,10 @@ const SignUp = () => {
 
         <section className=" rounded-2xl shadow-xl   bg-black/45 md:bg-black/55 bg-opacity-100  p-7 md:p-5">
           <h1 className="  font-medium text-xl  text-[#FFF1DB] p-3 text-center">
-            SignIn
+            SignUp
           </h1>
           <form
-            onSubmit={(e) => handleSignIn(e)}
+            onSubmit={(e) => handleSignUp(e)}
             className="py-4 gap-4 text-xl flex flex-col items-center"
           >
             <div className="flex flex-col md:flex-row py-1 md:py-4 md:items-center gap-2 md:gap-4">

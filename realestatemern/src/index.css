@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 *::-webkit-scrollbar {
   display: none;
 }
+/* body{
+  background-color: #55679C;
+} */
+/* body {
+  background-color: rgb(231, 239, 247);
+} */
+/* Add this CSS in your styles (e.g., App.css or a specific stylesheet) */

@@ -39,7 +39,9 @@ const Header = () => {
           Vellai<span className="text-orange-400">Estate</span>
         </h1>
       </div>
-      <div>
+
+      {/* hidden input search */}
+      <div className="hidden">
         <form onSubmit={(e) => handleSearch(e)}>
           <label className="flex items-center border border-neutral-400 rounded-md  shadow-md p-2">
             <input
@@ -101,9 +103,9 @@ const Header = () => {
         )}
       </div>
       <div className="fixed md:hidden flex justify-between items-center w-full bottom-0 z-10 bg-white border py-5">
-        <span className="px-5">
+        <Link to="/" className="px-5">
           <IoHomeOutline className="w-6 h-6" />
-        </span>
+        </Link>
         <span>
           <Heart className="w-6 h-6" />
         </span>
